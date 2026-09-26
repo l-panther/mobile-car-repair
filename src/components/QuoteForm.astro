@@ -1,0 +1,354 @@
+<section class="section quote-section" id="quote">
+  <div class="container">
+    <div class="row g-5 align-items-start">
+      <div class="col-12 col-lg-5">
+        <span class="eyebrow">Get in touch</span>
+        <h2>Get A Free <span class="accent">Quote</span></h2>
+        <p class="section-lede">Tell us about the damage to your vehicle and we'll provide a free, no-obligation quote. For a faster estimate, upload a few photos showing the affected area.</p>
+        <ul class="quote-check">
+          <li>Direct to your home or workplace</li>
+          <li>Free, no-obligation quotes</li>
+          <li>Fast response</li>
+          <li>Professional colour-matching</li>
+        </ul>
+      </div>
+
+      <div class="col-12 col-lg-7">
+        <form class="quote-form" id="quoteForm" novalidate aria-describedby="formStatus">
+
+          <!-- Success/error alert panel, shown above the form fields -->
+          <div id="formAlert" class="form-alert" role="alert" hidden>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>
+            </svg>
+            <span id="formAlertText"></span>
+            <button type="button" id="formAlertClose" aria-label="Dismiss">&times;</button>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="visually-hidden">Email address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              placeholder="Your email address"
+              required
+              aria-required="true"
+              aria-describedby="email-error"
+            />
+            <p id="email-error" class="field-error" role="alert"></p>
+          </div>
+
+          <div class="mb-3">
+            <label for="phone" class="visually-hidden">Phone number</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              class="form-control"
+              placeholder="+44 7xxx xxx xxx"
+              aria-describedby="phone-error"
+            />
+            <p id="phone-error" class="field-error" role="alert"></p>
+          </div>
+
+          <div class="mb-3">
+            <label for="message" class="visually-hidden">Describe your project</label>
+            <textarea
+              id="message"
+              name="message"
+              class="form-control"
+              rows="4"
+              placeholder="Describe your project..."
+              required
+              aria-required="true"
+              aria-describedby="message-error"
+            ></textarea>
+            <p id="message-error" class="field-error" role="alert"></p>
+          </div>
+
+          <div class="mb-3">
+            <span id="uploadLabel" class="d-block" style="font-weight:600;font-size:.85rem;color:var(--text-soft);margin-bottom:.4rem;">
+              Photos of the damage (optional)
+            </span>
+
+            <div
+              class="dropzone"
+              id="dropzone"
+              role="button"
+              tabindex="0"
+              aria-labelledby="uploadLabel"
+              aria-describedby="uploadHint"
+            >
+              <div class="ic" aria-hidden="true">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+              </div>
+              <div>Drag &amp; drop images here</div>
+              <div>or click to select files</div>
+              <p class="hint" id="uploadHint">JPG, PNG or WEBP only — up to 5MB per photo, max 5 photos.</p>
+              <input type="file" id="fileInput" accept="image/*" multiple hidden />
+            </div>
+
+            <div class="file-list" id="fileList" aria-live="polite"></div>
+            <p class="file-error" id="fileError" role="alert" style="display:none;"></p>
+          </div>
+
+          <button type="submit" class="btn btn-red w-100 mt-2">
+            <span class="btn-label">Request Quote</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+          <p id="formStatus" class="visually-hidden" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const fileListEl = document.getElementById('fileList');
+  const fileError = document.getElementById('fileError');
+
+  const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5MB per photo
+  const MAX_FILES = 5;
+  /** @type {File[]} */
+  let selectedFiles = [];
+
+  dropzone?.addEventListener('click', () => fileInput.click());
+  dropzone?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      fileInput.click();
+    }
+  });
+  dropzone?.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropzone.classList.add('is-dragover');
+  });
+  dropzone?.addEventListener('dragleave', () => dropzone.classList.remove('is-dragover'));
+  dropzone?.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('is-dragover');
+    if (e.dataTransfer?.files) handleFiles(e.dataTransfer.files);
+  });
+  fileInput?.addEventListener('change', () => {
+    if (fileInput.files) handleFiles(fileInput.files);
+  });
+
+  function handleFiles(fileListInput) {
+    const errors = [];
+
+    Array.from(fileListInput).forEach((file) => {
+      if (!file.type.startsWith('image/')) {
+        errors.push(`"${file.name}" isn't an image file, so it was skipped.`);
+        return;
+      }
+      if (file.size > MAX_SIZE_BYTES) {
+        errors.push(`"${file.name}" is over the 5MB limit, so it was skipped.`);
+        return;
+      }
+      if (selectedFiles.length >= MAX_FILES) {
+        errors.push(`You can attach up to ${MAX_FILES} photos — the rest were skipped.`);
+        return;
+      }
+      selectedFiles.push(file);
+    });
+
+    renderFileList();
+    showFileErrors(errors);
+    fileInput.value = ''; // allow re-selecting a removed file
+  }
+
+  function showFileErrors(errors) {
+    if (errors.length) {
+      fileError.textContent = errors.join(' ');
+      fileError.style.display = 'block';
+    } else {
+      fileError.style.display = 'none';
+      fileError.textContent = '';
+    }
+  }
+
+  function renderFileList() {
+    fileListEl.innerHTML = '';
+    selectedFiles.forEach((file, index) => {
+      const chip = document.createElement('div');
+      chip.className = 'file-chip';
+
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      img.alt = '';
+
+      const name = document.createElement('span');
+      name.textContent = file.name.length > 22 ? `${file.name.slice(0, 19)}…` : file.name;
+
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.setAttribute('aria-label', `Remove ${file.name}`);
+      removeBtn.innerHTML = '&times;';
+      removeBtn.addEventListener('click', () => {
+        selectedFiles.splice(index, 1);
+        renderFileList();
+      });
+
+      chip.append(img, name, removeBtn);
+      fileListEl.appendChild(chip);
+    });
+  }
+
+  // ---------- Field validation ----------
+  const form = document.getElementById('quoteForm');
+  const formStatus = document.getElementById('formStatus');
+  const submitBtn = form?.querySelector('button[type="submit"]');
+
+  const alertPanel = document.getElementById('formAlert');
+  const alertText = document.getElementById('formAlertText');
+  const alertClose = document.getElementById('formAlertClose');
+
+  const fields = {
+    email: document.getElementById('email'),
+    phone: document.getElementById('phone'),
+    message: document.getElementById('message'),
+  };
+
+  const validators = {
+    email(value) {
+      const v = value.trim();
+      if (!v) return 'Please enter your email address.';
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      if (!emailPattern.test(v)) return 'Please enter a valid email address.';
+      return '';
+    },
+    phone(value) {
+      const v = value.trim();
+      if (!v) return ''; // optional
+      const phonePattern = /^[+]?[\d\s()-]{7,20}$/;
+      if (!phonePattern.test(v)) return 'Please enter a valid phone number.';
+      return '';
+    },
+    message(value) {
+      const v = value.trim();
+      if (!v) return 'Please describe your project.';
+      if (v.length < 10) return 'Please add a bit more detail (at least 10 characters).';
+      return '';
+    },
+  };
+
+  function setFieldError(name, message) {
+    const input = fields[name];
+    const errorEl = document.getElementById(`${name}-error`);
+    if (!input || !errorEl) return;
+
+    if (message) {
+      input.classList.add('is-invalid');
+      input.classList.remove('is-valid');
+      input.setAttribute('aria-invalid', 'true');
+      errorEl.textContent = message;
+    } else {
+      input.classList.remove('is-invalid');
+      input.classList.add('is-valid');
+      input.setAttribute('aria-invalid', 'false');
+      errorEl.textContent = '';
+    }
+  }
+
+  function validateField(name) {
+    const input = fields[name];
+    if (!input) return true;
+    const error = validators[name](input.value);
+    setFieldError(name, error);
+    return !error;
+  }
+
+  const fieldNames = Object.keys(fields);
+
+  fieldNames.forEach((name) => {
+    const input = fields[name];
+    input?.addEventListener('blur', () => validateField(name));
+    input?.addEventListener('input', () => {
+      if (input.classList.contains('is-invalid')) validateField(name);
+    });
+  });
+
+  function validateAll() {
+    let isValid = true;
+
+    fieldNames.forEach((name) => {
+      if (!validateField(name)) isValid = false;
+    });
+
+    if (!isValid) {
+      const firstInvalidName = fieldNames.find((name) => fields[name]?.classList.contains('is-invalid'));
+      if (firstInvalidName) fields[firstInvalidName]?.focus();
+    }
+
+    return isValid;
+  }
+
+  // Simulates a server-side round trip (fake site — no real endpoint).
+  function fakeServerSubmit(payload) {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve({ ok: true }), 800);
+    });
+  }
+
+  function showAlert(message, tone) {
+    if (!alertPanel || !alertText) return;
+    alertText.textContent = message;
+    alertPanel.classList.remove('form-alert--success', 'form-alert--error');
+    alertPanel.classList.add(tone === 'error' ? 'form-alert--error' : 'form-alert--success');
+    alertPanel.hidden = false;
+  }
+
+  function hideAlert() {
+    if (alertPanel) alertPanel.hidden = true;
+  }
+
+  alertClose?.addEventListener('click', hideAlert);
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form) return;
+
+    hideAlert();
+    if (formStatus) formStatus.textContent = '';
+
+    const fieldsValid = validateAll();
+
+    if (!fieldsValid) {
+      if (formStatus) formStatus.textContent = 'Please fix the highlighted fields before submitting.';
+      return;
+    }
+
+    submitBtn?.classList.add('is-loading');
+    submitBtn?.setAttribute('disabled', 'true');
+
+    const formData = Object.fromEntries(new FormData(form).entries());
+    const result = await fakeServerSubmit({ ...formData, photoCount: selectedFiles.length });
+
+    submitBtn?.classList.remove('is-loading');
+    submitBtn?.removeAttribute('disabled');
+
+    if (result.ok) {
+      const photoNote = selectedFiles.length ? ` with ${selectedFiles.length} photo${selectedFiles.length > 1 ? 's' : ''}` : '';
+      if (formStatus) formStatus.textContent = `Your quote request has been sent${photoNote}.`;
+      showAlert(`Thanks — your quote request has been sent${photoNote}. We'll be in touch shortly.`, 'success');
+
+      form.reset();
+      selectedFiles = [];
+      renderFileList();
+      showFileErrors([]);
+      fieldNames.forEach((name) => {
+        fields[name]?.classList.remove('is-valid', 'is-invalid');
+        const errorEl = document.getElementById(`${name}-error`);
+        if (errorEl) errorEl.textContent = '';
+      });
+      alertPanel?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      if (formStatus) formStatus.textContent = 'Something went wrong. Please try again.';
+      showAlert('Something went wrong sending your request. Please try again.', 'error');
+    }
+  });
+</script>

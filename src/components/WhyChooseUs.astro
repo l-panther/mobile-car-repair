@@ -1,0 +1,21 @@
+---
+import Icon from './Icon.astro';
+import { whyChooseUs } from '../data/content.js';
+---
+
+<section class="section text-center">
+  <div class="container">
+    <h2>Why You Should <span class="accent">Choose Us</span></h2>
+    <div class="row g-5 mt-3">
+      {whyChooseUs.map((item) => (
+        <div class="col-12 col-md-4">
+          <div class="why-item">
+            <div class="ic"><Icon name={item.icon} size={32} /></div>
+            <h3>{item.title}</h3>
+            <p>{item.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

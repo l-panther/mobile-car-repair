@@ -1,0 +1,60 @@
+<!-- Cookie Consent Banner (Bottom) -->
+<div id="cookie-banner-bottom" class="cookie-banner">
+  <div class="container">
+    <div class="cookie-content">
+      <p>
+        We use cookies to enhance your browing experience, serve personalised ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies. <a href="/privacy-policy" target="_blank">Learn more</a>
+      </p>
+      <div class="cookie-actions">
+        <button id="cookie-settings-bottom" class="cookie-btn">Customise</button>
+        <button id="decline-cookies-bottom" class="cookie-btn">Decline</button>
+        <button id="accept-cookies-bottom" class="cookie-btn">Accept All</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Cookie Settings Modal -->
+<div id="cookie-settings-modal" class="cookie-settings-modal" role="dialog" aria-modal="true" aria-labelledby="cookieSettingsTitle" aria-describedby="cookieSettingsDesc">
+  <div class="cookie-modal-content">
+    <header class="cookie-modal-header">
+      <h2 id="cookieSettingsTitle">Cookie Settings</h2>
+      <button type="button" id="close-settings" class="cookie-close-btn" aria-label="Close cookie settings">&times;</button>
+    </header>
+
+    <div class="cookie-modal-body">
+      <p id="cookieSettingsDesc">Manage your cookie preferences below. You can allow or disallow cookies based on your preferences.</p>
+
+      <form id="cookie-settings-form">
+        <fieldset>
+          <legend class="visually-hidden">Cookie Categories</legend>
+
+          <div class="cookie-option">
+            <input type="checkbox" id="analytics-cookies" name="analytics" checked>
+            <label for="analytics-cookies"><strong>Analytics Cookies</strong> – Helps us understand website usage and improve our services.</label>
+          </div>
+
+          <div class="cookie-option">
+            <input type="checkbox" id="marketing-cookies" name="marketing" checked>
+            <label for="marketing-cookies"><strong>Marketing Cookies</strong> – Used for personalized advertising and promotions.</label>
+          </div>
+
+          <div class="cookie-option">
+            <input type="checkbox" id="functional-cookies" name="functional" checked>
+            <label for="functional-cookies"><strong>Functional Cookies</strong> – Necessary for essential website functionality.</label>
+          </div>
+        </fieldset>
+
+        <div class="cookie-modal-actions">
+          <button type="submit" id="save-cookies-settings" class="cookie-btn btn-primary">Save Preferences</button>
+          <button type="button" id="close-settings-secondary" class="cookie-btn btn-secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+#cookie-banner-bottom { display: block}
+</style>

@@ -1,0 +1,234 @@
+---
+import DamageArt from './DamageArt.astro';
+import { workItems, jobs } from '../data/content.js';
+---
+
+<section class="section" id="work" style="background:#0D0D0E;">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2><span class="accent">Work</span> We Have Completed</h2>
+      <p class="section-lede mx-auto">A few recent repairs, from panel dents to full respray colour-matching. Select any job to see the full before-and-after.</p>
+    </div>
+
+    <div class="work-grid">
+{jobs.map((item) => (
+  <button
+    type="button"
+    class="work-item"
+    data-bs-toggle="modal"
+    data-bs-target="#jobModal"
+    data-work={JSON.stringify(item.work)}
+    data-title={item.title}
+    data-image={item.modalImage}
+    data-alt={item.alt}
+    data-description={item.description}
+    data-services={item.services}
+    data-vehicle={item.vehicle}
+    data-repair-time={item.repairTime}
+    data-location={item.location}
+    data-repair-type={item.repairType}
+    data-finish={item.finish}
+    aria-haspopup="dialog"
+    aria-label={`View before and after photos: ${item.title}`}
+  >
+    <div class="pair" aria-hidden="true">
+      <div class="half before">
+        <span class="tag">Before</span>
+        <img src={item.images[0]} alt="" />
+      </div>
+      <div class="half after">
+        <span class="tag">After</span>
+        <img src={item.images[1]} alt="" />
+      </div>
+    </div>
+    <p class="cap mb-0">{item.title}</p>
+  </button>
+))}
+    </div>
+  </div>
+</section>
+
+<!-- Reusable job modal -->
+<div
+  class="modal fade"
+  id="jobModal"
+  tabindex="-1"
+  aria-labelledby="jobModalTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content job-modal">
+
+      <div class="modal-header">
+        <div>
+          <span class="job-modal-eyebrow">Completed work</span>
+          <h2 class="modal-title" id="jobModalTitle">Project details</h2>
+        </div>
+
+        <button
+          type="button"
+          class="job-modal-close right"
+          data-bs-dismiss="modal"
+          aria-label="Close modal"
+        >
+          <i class="bi bi-x-lg" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row g-4">
+
+          <div class="col-12">
+            <img
+              id="jobModalImage"
+              src=""
+              alt=""
+              class="job-modal-image"
+            />
+          </div>
+
+          <div class="col-lg-5">
+            <div class="job-details-grid">
+              <div class="job-detail">
+                <span>Vehicle</span>
+                <strong id="jobModalVehicle"></strong>
+              </div>
+              <div class="job-detail">
+                <span>Repair time</span>
+                <strong id="jobModalRepairTime"></strong>
+              </div>
+              <div class="job-detail">
+                <span>Location</span>
+                <strong id="jobModalLocation"></strong>
+              </div>
+              <div class="job-detail">
+                <span>Repair type</span>
+                <strong id="jobModalRepairType"></strong>
+              </div>
+              <div class="job-detail">
+                <span>Finish</span>
+                <strong id="jobModalFinish"></strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-7">
+            <h3>Work carried out</h3>
+            <p id="jobModalDescription"></p>
+            <ul id="jobModalWork" class="job-work-list"></ul>
+            <div class="job-modal-services">
+              <span>Services included</span>
+              <p id="jobModalServices"></p>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <button
+              type="button"
+              id="jobModalQuoteButton"
+              class="job-modal-button"
+            >
+              Request a similar repair
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('jobModal');
+    const quoteButton = document.getElementById('jobModalQuoteButton');
+
+    if (!modal) return;
+
+    modal.addEventListener('show.bs.modal', (event) => {
+      const trigger = (event as CustomEvent & {
+        relatedTarget: HTMLElement;
+      }).relatedTarget;
+
+      if (!trigger) return;
+
+      const image = modal.querySelector('#jobModalImage') as HTMLImageElement | null;
+      const title = modal.querySelector('#jobModalTitle') as HTMLElement | null;
+      const description = modal.querySelector('#jobModalDescription') as HTMLElement | null;
+      const services = modal.querySelector('#jobModalServices') as HTMLElement | null;
+      const vehicle = modal.querySelector('#jobModalVehicle') as HTMLElement | null;
+      const repairTime = modal.querySelector('#jobModalRepairTime') as HTMLElement | null;
+      const location = modal.querySelector('#jobModalLocation') as HTMLElement | null;
+      const repairType = modal.querySelector('#jobModalRepairType') as HTMLElement | null;
+      const finish = modal.querySelector('#jobModalFinish') as HTMLElement | null;
+      const workList = modal.querySelector('#jobModalWork') as HTMLUListElement | null;
+
+      if (title) title.textContent = trigger.dataset.title ?? '';
+      if (description) description.textContent = trigger.dataset.description ?? '';
+      if (services) services.textContent = trigger.dataset.services ?? '';
+      if (vehicle) vehicle.textContent = trigger.dataset.vehicle ?? '';
+      if (repairTime) repairTime.textContent = trigger.dataset.repairTime ?? '';
+      if (location) location.textContent = trigger.dataset.location ?? '';
+      if (repairType) repairType.textContent = trigger.dataset.repairType ?? '';
+      if (finish) finish.textContent = trigger.dataset.finish ?? '';
+
+      if (image) {
+        image.src = trigger.dataset.image ?? '';
+        image.alt = trigger.dataset.alt ?? '';
+      }
+
+      if (workList) {
+        workList.replaceChildren();
+
+        let items: string[] = [];
+        try {
+          items = JSON.parse(trigger.dataset.work ?? '[]');
+        } catch {
+          items = [];
+        }
+
+        items.forEach((item) => {
+          const listItem = document.createElement('li');
+
+          const icon = document.createElement('i');
+          icon.className = 'bi bi-check-circle-fill';
+          icon.setAttribute('aria-hidden', 'true');
+
+          const text = document.createElement('span');
+          text.textContent = item;
+
+          listItem.append(icon, text);
+          workList.appendChild(listItem);
+        });
+      }
+    });
+
+    quoteButton?.addEventListener('click', () => {
+      const quoteForm = document.getElementById('quoteForm');
+
+      if (!quoteForm) {
+        console.error('No element with id="quoteForm" was found.');
+        return;
+      }
+
+      // Wait until Bootstrap has fully closed the modal so body scroll is restored first.
+      modal.addEventListener(
+        'hidden.bs.modal',
+        () => {
+          quoteForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.replaceState(null, '', '#quoteForm');
+
+          const firstField = quoteForm.querySelector('input, textarea, select') as HTMLElement | null;
+          window.setTimeout(() => {
+            firstField?.focus({ preventScroll: true });
+          }, 500);
+        },
+        { once: true }
+      );
+
+      const closeButton = modal.querySelector('[data-bs-dismiss="modal"]') as HTMLButtonElement | null;
+      closeButton?.click();
+    });
+  });
+</script>

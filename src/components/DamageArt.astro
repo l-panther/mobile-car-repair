@@ -1,0 +1,23 @@
+---
+const { state = 'before', color = '#2148A0' } = Astro.props;
+const damaged = state === 'before';
+---
+
+<svg viewBox="0 0 300 225" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;" role="img" aria-hidden="true">
+  <rect width="300" height="225" fill={color} />
+  <rect y="150" width="300" height="75" fill="rgba(0,0,0,.18)" />
+  {damaged ? (
+    <g>
+      <path d="M70 110 q30 -22 70 -14 q28 6 40 26 q8 14 -4 22 q-30 18 -68 10 q-32 -6 -44 -24 q-6 -10 6 -20Z" fill="rgba(0,0,0,.35)" />
+      <path d="M90 100 q20 -10 46 -4" stroke="rgba(0,0,0,.55)" stroke-width="4" fill="none" stroke-linecap="round" />
+      <path d="M100 130 q18 8 40 4" stroke="rgba(0,0,0,.5)" stroke-width="3" fill="none" stroke-linecap="round" />
+      <circle cx="112" cy="112" r="4" fill="rgba(0,0,0,.5)" />
+      <circle cx="132" cy="120" r="3" fill="rgba(0,0,0,.5)" />
+    </g>
+  ) : (
+    <g>
+      <ellipse cx="150" cy="112" rx="70" ry="8" fill="rgba(255,255,255,.14)" />
+      <ellipse cx="150" cy="95" rx="46" ry="5" fill="rgba(255,255,255,.1)" />
+    </g>
+  )}
+</svg>

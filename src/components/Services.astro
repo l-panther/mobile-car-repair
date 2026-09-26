@@ -1,0 +1,35 @@
+---
+import Icon from './Icon.astro';
+import { services } from '../data/content.js';
+
+const artColors = {
+  'body-restoration': '#2148A0',
+  'panel-respray': '#8A8F99',
+  'alloy-restoration': '#111318',
+  'custom-work': '#D0201B',
+};
+---
+
+<section class="section" id="services" style="background:#0D0D0E;">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2><span class="accent">Services</span> That We Provide</h2>
+    </div>
+
+    <div class="row g-4">
+      {services.map((service) => (
+        <div class="col-12 col-md-6">
+          <div class="service-card">
+            <img src={service.image} alt="" class="art" />
+            <div class="ic"><Icon name={service.icon} /></div>
+            <div class="body">
+              <h3>{service.title}</h3>
+              <div class="rule"></div>
+              <p>{service.desc}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
