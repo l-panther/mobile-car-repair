@@ -108,6 +108,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   rgba(0,0,0,0.25),
   rgba(0,0,0,0.95)),
     url("/assets/images/hero/car-bg.jpg") no-repeat;
+  background:
+     linear-gradient(
+      90deg,
+      rgba(3, 8, 17, 0.65) 0%,
+      rgba(3, 8, 17, 0.25) 50%,
+      rgba(3, 8, 17, 0.05) 100%
+    ),
+   url("/assets/images/hero/car-bg.jpg") no-repeat;
   background-position: center;
   background-size: cover;
   overflow:hidden;
