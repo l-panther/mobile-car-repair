@@ -1,16 +1,219 @@
+
 <section class="section about" id="about">
   <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-6 d-none d-lg-block">
-        <img src={`${import.meta.env.BASE_URL}assets/images/welcome/car.png`} alt="">
-      </div>
+    <div class="row align-items-center g-5">
+
+      <!-- ABOUT IMAGES -->
       <div class="col-12 col-lg-6">
-        <span class="eyebrow">Learn more</span>
-        <h2>About <span class="accent">Us</span></h2>
-        <p class="section-lede">We specialise in car bodywork repair, providing a mobile repair service to any vehicle bodywork damaged at your convenience. We bring our mobile bodyshop to you, at home or work, at a time to suit you. We offer a range of car bodywork repair services to help get your vehicle looking great again.</p>
-        <p class="section-lede">We work <strong>5 days a week</strong>, either coming to your home or your workplace. We cover <strong>East London</strong>, <strong>South London</strong> and the whole of <strong>Kent</strong>.</p>
-        <p class="section-lede">Need a repair? <a href="#quote" class="accent">Get a free, no-obligation quote</a> today. Simply send us a photo of the damage and we'll provide an estimate before arranging a convenient time to carry out the repair at your home or workplace.</p>
+        <div class="about-gallery">
+
+          <div class="about-image-main">
+            <img
+              src={`${import.meta.env.BASE_URL}assets/images/welcome/about-main.webp`}
+              alt="Mobile car bodywork repair technician working on a vehicle"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="about-image-grid">
+            <div class="about-image-small">
+              <img
+                src={`${import.meta.env.BASE_URL}assets/images/welcome/about-prep.webp`}
+                alt="Preparing a damaged car panel for repair"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="about-image-small">
+              <img
+                src={`${import.meta.env.BASE_URL}assets/images/welcome/about-paint.webp`}
+                alt="Professional automotive paintwork repair"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="about-image-small">
+              <img
+                src={`${import.meta.env.BASE_URL}assets/images/welcome/about-finish.webp`}
+                alt="Restored car bodywork with a polished finish"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+        </div>
       </div>
+
+      <!-- ABOUT CONTENT -->
+      <div class="col-12 col-lg-6">
+        <div class="about-content">
+
+          <span class="eyebrow">Learn more</span>
+
+          <h2>About <span class="accent">Us</span></h2>
+
+          <p class="section-lede">
+            We specialise in professional car bodywork
+            repairs, bringing our mobile repair service
+            directly to your home or workplace.
+            From minor scratches and dents to paintwork
+            restoration, we provide convenient solutions
+            to help get your vehicle looking its best again.
+          </p>
+
+          <p class="section-lede">
+            We work <strong>5 days a week</strong>,
+            offering appointments at a time that suits you.
+            Our mobile service covers
+            <strong>East London</strong>,
+            <strong>South London</strong>,
+            and the whole of <strong>Kent</strong>.
+          </p>
+
+          <p class="section-lede">
+            Need a repair? Simply send us a photograph
+            of the damage and we'll provide an estimate
+            before arranging a convenient time to carry
+            out the work.
+          </p>
+
+          <a href="#quote" class="about-cta">
+            Get a Free Quote
+            <i class="bi bi-arrow-right"></i>
+          </a>
+
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
+
+<style>
+
+/* ABOUT SECTION */
+.about {
+  background: #08090b;
+  padding: 6rem 0;
+}
+
+/* IMAGE GALLERY */
+.about-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.about-image-main,
+.about-image-small {
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #141414;
+}
+
+.about-image-main {
+  aspect-ratio: 16 / 10;
+}
+
+.about-image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.about-image-small {
+  aspect-ratio: 4 / 3;
+}
+
+.about-gallery img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.4s ease;
+}
+
+.about-gallery img:hover {
+  transform: scale(1.04);
+}
+
+/* ABOUT CONTENT */
+.about-content {
+  max-width: 580px;
+}
+
+.about-content h2 {
+  margin: 0.5rem 0 1.5rem;
+}
+
+.about-content .section-lede {
+  color: #b7b7b7;
+  line-height: 1.85;
+  margin-bottom: 1.25rem;
+}
+
+.about-content strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* CTA */
+.about-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 1rem;
+  padding: 14px 24px;
+  border-radius: 5px;
+  background: #d71920;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.25s ease;
+}
+
+.about-cta:hover {
+  background: #b9151b;
+  color: #fff;
+}
+
+/* RESPONSIVE */
+@media (max-width: 991.98px) {
+  .about {
+    padding: 4rem 0;
+  }
+
+  .about-content {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .about {
+    padding: 3rem 0;
+  }
+
+  .about-gallery {
+    gap: 8px;
+  }
+
+  .about-image-grid {
+    gap: 8px;
+  }
+
+  .about-image-main {
+    aspect-ratio: 16 / 10;
+  }
+
+  .about-image-small {
+    aspect-ratio: 1 / 1;
+  }
+
+  .about-content .section-lede {
+    line-height: 1.75;
+  }
+}
+</style>
