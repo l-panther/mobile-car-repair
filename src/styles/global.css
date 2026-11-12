@@ -103,19 +103,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* ---------- hero ---------- */
 .hero{
   position:relative; min-height:640px; display:flex; align-items:center;
-  background:
-    linear-gradient(to bottom,
-  rgba(0,0,0,0.25),
-  rgba(0,0,0,0.95)),
-    url("/assets/images/hero/car-bg.jpg") no-repeat;
-  background:
-     linear-gradient(
-      90deg,
-      rgba(3, 8, 17, 0.65) 0%,
-      rgba(3, 8, 17, 0.25) 50%,
-      rgba(3, 8, 17, 0.05) 100%
-    ),
-   url("/assets/images/hero/car-bg.jpg") no-repeat;
+  b
+background:
+  linear-gradient(
+    90deg,
+    rgba(3, 8, 17, 0.95) 0%,
+    rgba(3, 8, 17, 0.85) 20%,
+    rgba(3, 8, 17, 0.65) 38%,
+    rgba(3, 8, 17, 0.25) 60%,
+    rgba(3, 8, 17, 0.05) 100%
+  ),
+  url("/assets/images/hero/car-bg.jpg") center / cover no-repeat;
   background-position: center;
   background-size: cover;
   overflow:hidden;
