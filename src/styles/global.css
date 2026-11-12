@@ -103,8 +103,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* ---------- hero ---------- */
 .hero{
   position:relative; min-height:640px; display:flex; align-items:center;
-  b
-background:
+  background:
   linear-gradient(
     90deg,
     rgba(3, 8, 17, 0.95) 0%,
