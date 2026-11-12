@@ -38,7 +38,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   padding: 0 20px;
   margin: auto;
 }
-#services .container, #work .container {
+#work .container {
   width: 100% !important;
   max-width: 70rem !important;
   padding: 0 20px;
