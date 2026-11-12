@@ -1,219 +1,375 @@
 
-<section class="section about" id="about">
+---
+const highlights = [
+  {
+    icon: "bi-calendar-check",
+    title: "5 Days a Week",
+    description: "Flexible appointments at a time that suits you."
+  },
+  {
+    icon: "bi-geo-alt",
+    title: "Areas We Cover",
+    description: "East London, South London and the whole of Kent."
+  },
+  {
+    icon: "bi-car-front",
+    title: "Mobile Repairs",
+    description: "Professional repairs at your home or workplace."
+  },
+  {
+    icon: "bi-camera",
+    title: "Free Quotes",
+    description: "Send us a photo of the damage for an estimate."
+  }
+];
+---
+
+<section class="about-section" id="about">
   <div class="container">
-    <div class="row align-items-center g-5">
 
-      <!-- ABOUT IMAGES -->
-      <div class="col-12 col-lg-6">
-        <div class="about-gallery">
+    <div class="about-layout">
 
-          <div class="about-image-main">
-            <img
-              src={`${import.meta.env.BASE_URL}assets/images/welcome/about-main.webp`}
-              alt="Mobile car bodywork repair technician working on a vehicle"
-              loading="lazy"
-            />
-          </div>
+      <!-- LEFT: ABOUT CONTENT -->
+      <div class="about-content">
 
-          <div class="about-image-grid">
-            <div class="about-image-small">
-              <img
-                src={`${import.meta.env.BASE_URL}assets/images/welcome/about-prep.webp`}
-                alt="Preparing a damaged car panel for repair"
-                loading="lazy"
-              />
-            </div>
+        <span class="section-eyebrow">LEARN MORE</span>
 
-            <div class="about-image-small">
-              <img
-                src={`${import.meta.env.BASE_URL}assets/images/welcome/about-paint.webp`}
-                alt="Professional automotive paintwork repair"
-                loading="lazy"
-              />
-            </div>
+        <h2 class="about-title">
+          ABOUT <span>US</span>
+        </h2>
 
-            <div class="about-image-small">
-              <img
-                src={`${import.meta.env.BASE_URL}assets/images/welcome/about-finish.webp`}
-                alt="Restored car bodywork with a polished finish"
-                loading="lazy"
-              />
-            </div>
-          </div>
+        <p>
+          We specialise in professional car bodywork repairs,
+          bringing our mobile repair service directly to your
+          home or workplace.
+        </p>
 
-        </div>
+        <p>
+          From minor scratches and dents to paintwork restoration,
+          we provide convenient solutions to help get your vehicle
+          looking its best again.
+        </p>
+
+        <p>
+          Need a repair? Simply send us a photograph of the damage
+          and we'll provide an estimate before arranging a
+          convenient time to carry out the work.
+        </p>
+
+        <a href="#contact" class="about-btn">
+          Get a Free Quote
+          <i class="bi bi-arrow-right"></i>
+        </a>
+
       </div>
 
-      <!-- ABOUT CONTENT -->
-      <div class="col-12 col-lg-6">
-        <div class="about-content">
+      <!-- RIGHT: HIGHLIGHT CARDS -->
+      <div class="about-highlights">
 
-          <span class="eyebrow">Learn more</span>
+        {highlights.map((item) => (
+          <div class="about-highlight-card">
 
-          <h2>About <span class="accent">Us</span></h2>
+            <div class="highlight-icon">
+              <i class={`bi ${item.icon}`} aria-hidden="true"></i>
+            </div>
 
-          <p class="section-lede">
-            We specialise in professional car bodywork
-            repairs, bringing our mobile repair service
-            directly to your home or workplace.
-            From minor scratches and dents to paintwork
-            restoration, we provide convenient solutions
-            to help get your vehicle looking its best again.
-          </p>
+            <div class="highlight-content">
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </div>
 
-          <p class="section-lede">
-            We work <strong>5 days a week</strong>,
-            offering appointments at a time that suits you.
-            Our mobile service covers
-            <strong>East London</strong>,
-            <strong>South London</strong>,
-            and the whole of <strong>Kent</strong>.
-          </p>
+          </div>
+        ))}
 
-          <p class="section-lede">
-            Need a repair? Simply send us a photograph
-            of the damage and we'll provide an estimate
-            before arranging a convenient time to carry
-            out the work.
-          </p>
-
-          <a href="#quote" class="about-cta">
-            Get a Free Quote
-            <i class="bi bi-arrow-right"></i>
-          </a>
-
-        </div>
       </div>
 
     </div>
+
   </div>
 </section>
 
 <style>
 
-/* ABOUT SECTION */
-.about {
-  background: #08090b;
-  padding: 6rem 0;
+/* ==========================================
+   ABOUT SECTION
+========================================== */
+
+.about-section {
+  position: relative;
+  background: #080808;
+  padding: 100px 0;
 }
 
-/* IMAGE GALLERY */
-.about-gallery {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-}
+/* MAIN TWO-COLUMN LAYOUT */
 
-.about-image-main,
-.about-image-small {
-  overflow: hidden;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: #141414;
-}
-
-.about-image-main {
-  aspect-ratio: 16 / 10;
-}
-
-.about-image-grid {
+.about-layout {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 70px;
 }
 
-.about-image-small {
-  aspect-ratio: 4 / 3;
-}
+/* ==========================================
+   LEFT: CONTENT
+========================================== */
 
-.about-gallery img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform 0.4s ease;
-}
-
-.about-gallery img:hover {
-  transform: scale(1.04);
-}
-
-/* ABOUT CONTENT */
 .about-content {
-  max-width: 580px;
+  min-width: 0;
 }
 
-.about-content h2 {
-  margin: 0.5rem 0 1.5rem;
+.section-eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: #e02020;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
-.about-content .section-lede {
-  color: #b7b7b7;
-  line-height: 1.85;
-  margin-bottom: 1.25rem;
-}
-
-.about-content strong {
+.about-title {
+  margin: 0 0 24px;
   color: #fff;
-  font-weight: 600;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  text-transform: uppercase;
 }
 
-/* CTA */
-.about-cta {
+.about-title span {
+  color: #e02020;
+}
+
+.about-content p {
+  margin: 0 0 18px;
+  color: #bcbcbc;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.about-content p:last-of-type {
+  margin-bottom: 30px;
+}
+
+/* ABOUT BUTTON */
+
+.about-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
-  margin-top: 1rem;
+
   padding: 14px 24px;
-  border-radius: 5px;
+
   background: #d71920;
+  border: 1px solid #d71920;
+  border-radius: 5px;
+
   color: #fff;
+  font-size: 0.85rem;
   font-weight: 600;
   text-decoration: none;
-  transition: background 0.25s ease;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
 }
 
-.about-cta:hover {
+.about-btn:hover {
   background: #b9151b;
+  border-color: #b9151b;
   color: #fff;
+  transform: translateY(-2px);
 }
 
-/* RESPONSIVE */
+.about-btn i {
+  font-size: 1rem;
+}
+
+/* ==========================================
+   RIGHT: HIGHLIGHT GRID
+========================================== */
+
+.about-highlights {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  min-width: 0;
+}
+
+/* HIGHLIGHT CARD */
+
+.about-highlight-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  min-width: 0;
+  min-height: 185px;
+  padding: 25px 22px;
+
+  background: #141416;
+  border: 1px solid #2a2a2e;
+  border-radius: 8px;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.about-highlight-card:hover {
+  background: #19191c;
+  border-color: rgba(224, 32, 32, 0.55);
+  transform: translateY(-3px);
+}
+
+/* ICON */
+
+.highlight-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+  margin-bottom: 20px;
+
+  border: 1px solid #d71920;
+  border-radius: 50%;
+
+  color: #e02020;
+}
+
+.highlight-icon i {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+/* CARD TEXT */
+
+.highlight-content h3 {
+  margin: 0 0 8px;
+
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.highlight-content p {
+  margin: 0;
+
+  color: #a9a9a9;
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
 @media (max-width: 991.98px) {
-  .about {
-    padding: 4rem 0;
+
+  .about-section {
+    padding: 75px 0;
+  }
+
+  .about-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 45px;
   }
 
   .about-content {
-    max-width: 100%;
+    max-width: 700px;
   }
+
+  .about-highlights {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-highlight-card {
+    min-height: 160px;
+  }
+
 }
+
+/* ==========================================
+   MOBILE
+========================================== */
 
 @media (max-width: 575.98px) {
-  .about {
-    padding: 3rem 0;
+
+  .about-section {
+    padding: 60px 0;
   }
 
-  .about-gallery {
-    gap: 8px;
+  .about-layout {
+    gap: 35px;
   }
 
-  .about-image-grid {
-    gap: 8px;
+  .about-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
   }
 
-  .about-image-main {
-    aspect-ratio: 16 / 10;
-  }
-
-  .about-image-small {
-    aspect-ratio: 1 / 1;
-  }
-
-  .about-content .section-lede {
+  .about-content p {
+    font-size: 0.9rem;
     line-height: 1.75;
   }
+
+  .about-btn {
+    padding: 12px 20px;
+    font-size: 0.8rem;
+  }
+
+  .about-highlights {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .about-highlight-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 18px;
+
+    min-height: auto;
+    padding: 20px;
+  }
+
+  .highlight-icon {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    margin-bottom: 0;
+  }
+
+  .highlight-content h3 {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+  }
+
+  .highlight-content p {
+    font-size: 0.8rem;
+  }
+
 }
+
+/* ==========================================
+   REDUCED MOTION
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .about-btn,
+  .about-highlight-card {
+    transition: none;
+  }
+
+  .about-btn:hover,
+  .about-highlight-card:hover {
+    transform: none;
+  }
+}
+
 </style>
