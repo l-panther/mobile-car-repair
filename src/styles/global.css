@@ -106,10 +106,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   background:
   linear-gradient(
     90deg,
-    rgba(3, 8, 17, 0.95) 0%,
-    rgba(3, 8, 17, 0.85) 20%,
-    rgba(3, 8, 17, 0.65) 38%,
-    rgba(3, 8, 17, 0.25) 60%,
+    rgba(3, 8, 17, 0.97) 0%,
+    rgba(3, 8, 17, 0.90) 25%,
+    rgba(3, 8, 17, 0.75) 45%,
+    rgba(3, 8, 17, 0.40) 65%,
     rgba(3, 8, 17, 0.05) 100%
   ),
   url("/assets/images/hero/car-bg.jpg") center / cover no-repeat;
